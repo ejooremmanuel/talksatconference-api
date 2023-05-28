@@ -17,7 +17,7 @@ import { NestGateway } from '@nestjs/websockets/interfaces/nest-gateway.interfac
   },
 })
 export class ChatGateway implements NestGateway {
-  constructor() {}
+  constructor(private chatService: ChatService) {}
 
   afterInit(server: Server) {}
 
@@ -37,7 +37,7 @@ export class ChatGateway implements NestGateway {
   async handleNewMessage(chat: ChatDto, sender: any) {
     try {
       console.log('New Chat', chat);
-
+      await this.chatService.saveChat(chat);
       sender.emit('newChat', chat);
       sender.broadcast.emit('newChat', chat);
     } catch (error) {
