@@ -86,8 +86,7 @@ export class TalkService {
 
       if (
         findTalk &&
-        findTalk.attendee.length > 1 &&
-        findTalk.chat.length > 0
+        (findTalk.attendee.length > 1 || findTalk.chat.length > 0)
       ) {
         await this.talkModel.findByIdAndUpdate(talkId, {
           $set: {
