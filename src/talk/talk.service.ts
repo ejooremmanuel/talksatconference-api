@@ -42,7 +42,7 @@ export class TalkService {
         .findById(talkId)
         .populate('attendee');
 
-      if (!foundTalk) {
+      if (!foundTalk || foundTalk.status === TalkStatusEnum.IN_ACTIVE) {
         throw new NotFoundException('talk not found');
       }
 
@@ -99,6 +99,30 @@ export class TalkService {
       await this.talkModel.findByIdAndDelete(talkId);
     } catch (error) {
       throw new HttpException(`server error:${error.message}`, 500, {
+        cause: error,
+      });
+    }
+  }
+
+  async getTalkChats(talkId: string): Promise<TalkResponse> {
+    try {
+      const foundTalk = await this.talkModel
+        .findById(talkId)
+        .populate({
+          path: 'chat',
+          populate: {
+            path: 'sender',
+          },
+        })
+        .populate('attendee');
+
+      if (!foundTalk || foundTalk.status === TalkStatusEnum.IN_ACTIVE) {
+        throw new NotFoundException('talk not found');
+      }
+
+      return TalkResponse.from(foundTalk);
+    } catch (error) {
+      throw new HttpException('server error', 500, {
         cause: error,
       });
     }
