@@ -22,7 +22,7 @@ export class TalkController {
   async createTalk(
     @Body() data: TalkDto,
     @Res() res: Response,
-  ): Promise<unknown> {
+  ): Promise<Response<any, Record<string, any>>> {
     const newTalk = await this.talkService.createTalk(data);
     return res.status(201).json({
       data: newTalk,
@@ -39,7 +39,7 @@ export class TalkController {
     @Param('id') id: string,
     @Body() data: TalkDto,
     @Res() res: Response,
-  ): Promise<unknown> {
+  ): Promise<Response<any, Record<string, any>>> {
     const updatedTalk = await this.talkService.addAttendeeToTalk(
       id,
       data.attendee,
@@ -54,7 +54,7 @@ export class TalkController {
   async getTalkChats(
     @Param('id') id: string,
     @Res() res: Response,
-  ): Promise<unknown> {
+  ): Promise<Response<any, Record<string, any>>> {
     const data = await this.talkService.getTalkChats(id);
     return res.status(200).json({
       data,
@@ -66,7 +66,7 @@ export class TalkController {
   async removeTalk(
     @Param('id') id: string,
     @Res() res: Response,
-  ): Promise<unknown> {
+  ): Promise<Response<any, Record<string, any>>> {
     await this.talkService.removeTalk(id);
     return res.status(200).json({
       success: true,

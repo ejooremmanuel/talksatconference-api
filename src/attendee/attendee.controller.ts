@@ -15,7 +15,7 @@ export class AttendeeController {
   async createAttendees(
     @Res() res: Response,
     @Body() data: AttendeeDto,
-  ): Promise<unknown> {
+  ): Promise<Response<any, Record<string, any>>> {
     const newAttendee = await this.attendeeService.createAttendee(data);
     return res.status(HttpStatus.CREATED).json({
       success: true,
