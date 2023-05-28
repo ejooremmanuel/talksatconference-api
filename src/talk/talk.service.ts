@@ -10,6 +10,7 @@ import { Attendee } from 'src/schema/attendee.schema';
 import { Talk } from 'src/schema/talk.schema';
 import { TalkDto } from './data/data.request';
 import { TalkResponse } from './data/data.response';
+import { TalkStatusEnum } from './types/talk-status.enum';
 
 @Injectable()
 export class TalkService {
@@ -79,6 +80,22 @@ export class TalkService {
   }
   async removeTalk(talkId: string): Promise<void> {
     try {
+      const findTalk = await this.talkModel
+        .findById(talkId)
+        .populate('chat attendee');
+
+      if (
+        findTalk &&
+        findTalk.attendee.length > 1 &&
+        findTalk.chat.length > 0
+      ) {
+        await this.talkModel.findByIdAndUpdate(talkId, {
+          $set: {
+            status: TalkStatusEnum.IN_ACTIVE,
+          },
+        });
+      }
+
       await this.talkModel.findByIdAndDelete(talkId);
     } catch (error) {
       throw new HttpException(`server error:${error.message}`, 500, {
