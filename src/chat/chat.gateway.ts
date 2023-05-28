@@ -24,7 +24,9 @@ export class ChatGateway implements NestGateway {
   handleConnection(socket: any) {
     const query = socket.handshake.query;
     console.log('Connected', JSON.stringify(query));
-    process.nextTick(async () => {});
+    process.nextTick(async () => {
+      socket.emit('allChats', await this.chatService.getChats());
+    });
   }
 
   handleDisconnect(socket: any) {
