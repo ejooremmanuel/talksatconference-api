@@ -77,4 +77,13 @@ export class TalkService {
       });
     }
   }
+  async removeTalk(talkId: string): Promise<void> {
+    try {
+      await this.talkModel.findByIdAndDelete(talkId);
+    } catch (error) {
+      throw new HttpException(`server error:${error.message}`, 500, {
+        cause: error,
+      });
+    }
+  }
 }
