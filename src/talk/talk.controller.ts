@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -12,6 +13,8 @@ import { ApiTags, ApiParam } from '@nestjs/swagger';
 import { TalkService } from './talk.service';
 import { Response } from 'express';
 import { TalkDto } from './data/data.request';
+import { ServerResponse } from '../types/ServerResponse';
+import { TalkResponse } from './data/data.response';
 
 @Controller('talk')
 export class TalkController {
@@ -21,13 +24,13 @@ export class TalkController {
   @Post()
   async createTalk(
     @Body() data: TalkDto,
-    @Res() res: Response,
-  ): Promise<Response<any, Record<string, any>>> {
+  ): Promise<ServerResponse<TalkResponse>> {
     const newTalk = await this.talkService.createTalk(data);
-    return res.status(201).json({
+    return {
       data: newTalk,
+      status: HttpStatus.CREATED,
       success: true,
-    });
+    };
   }
 
   @ApiTags('Add attendee to a talk')
@@ -38,16 +41,14 @@ export class TalkController {
   async addAttendeeToTalk(
     @Param('id') id: string,
     @Body() data: TalkDto,
-    @Res() res: Response,
-  ): Promise<Response<any, Record<string, any>>> {
+    @Res() res?: Response,
+  ): Promise<unknown> {
     const updatedTalk = await this.talkService.addAttendeeToTalk(
       id,
       data.attendee,
     );
-    return res.status(200).json({
-      data: updatedTalk,
-      success: true,
-    });
+    HttpStatus.OK;
+    return updatedTalk;
   }
   @ApiTags('Get all chats for a talk')
   @Get(':id')

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Attendee } from './attendee.schema';
 import { Chat } from './chat.schema';
-import { TalkStatusEnum } from 'src/talk/types/talk-status.enum';
+import { TalkStatusEnum } from '../talk/types/talk-status.enum';
 
 export type TalkDocument = mongoose.HydratedDocument<Talk>;
 

@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Attendee } from 'src/schema/attendee.schema';
-import { Talk } from 'src/schema/talk.schema';
+import { Attendee } from '../schema/attendee.schema';
+import { Talk } from '../schema/talk.schema';
 import { TalkDto } from './data/data.request';
 import { TalkResponse } from './data/data.response';
 import { TalkStatusEnum } from './types/talk-status.enum';
