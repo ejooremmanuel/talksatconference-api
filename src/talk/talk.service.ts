@@ -77,7 +77,7 @@ export class TalkService {
       );
       return TalkResponse.from(updatedTalkWithNewAttendee);
     } catch (error) {
-      throw new HttpException(error.message, 500, {
+      throw new HttpException(error.message, 400, {
         cause: error,
       });
     }
