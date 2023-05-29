@@ -2,7 +2,7 @@ import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AttendeeService } from './attendee.service';
 import { AttendeeDto } from './data/data.request';
-import { Response } from 'express';
+import { AttendeeResponse } from './data/data.response';
 
 @Controller('attendee')
 export class AttendeeController {
@@ -12,14 +12,7 @@ export class AttendeeController {
     status: HttpStatus.CREATED,
   })
   @ApiTags('Add attendee')
-  async createAttendees(
-    @Res() res: Response,
-    @Body() data: AttendeeDto,
-  ): Promise<Response<any, Record<string, any>>> {
-    const newAttendee = await this.attendeeService.createAttendee(data);
-    return res.status(HttpStatus.CREATED).json({
-      success: true,
-      data: newAttendee,
-    });
+  async createAttendees(@Body() data: AttendeeDto): Promise<AttendeeResponse> {
+    return this.attendeeService.createAttendee(data);
   }
 }

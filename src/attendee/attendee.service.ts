@@ -16,9 +16,13 @@ export class AttendeeService {
       const createdAttendee = await this.attendeeModel.create(data);
       return AttendeeResponse.from(createdAttendee);
     } catch (error) {
-      throw new HttpException(error.message, 400, {
-        cause: error,
-      });
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 400,
+        {
+          cause: error,
+        },
+      );
     }
   }
 }

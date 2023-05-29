@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Chat } from '../schema/chat.schema';
@@ -15,7 +15,17 @@ export class ChatService {
   ) {}
 
   async getChats(): Promise<Chat[]> {
-    return await this.chatModel.find();
+    try {
+      return await this.chatModel.find();
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 500,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 
   async saveChat(chat: ChatDto): Promise<void> {
@@ -25,7 +35,7 @@ export class ChatService {
         .populate('attendee');
 
       if (!findTalk) {
-        throw new HttpException('talk not found', 400);
+        throw new BadRequestException('talk not found');
       }
 
       const findAttendeeDetails = await this.attendeeModel.findById(
@@ -51,10 +61,13 @@ export class ChatService {
         },
       });
     } catch (error) {
-      console.log(error);
-      throw new HttpException(`${error.message}`, 400, {
-        cause: error,
-      });
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 400,
+        {
+          cause: error,
+        },
+      );
     }
   }
 }

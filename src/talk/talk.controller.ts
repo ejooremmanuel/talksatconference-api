@@ -7,13 +7,10 @@ import {
   Param,
   Post,
   Put,
-  Res,
 } from '@nestjs/common';
 import { ApiTags, ApiParam } from '@nestjs/swagger';
 import { TalkService } from './talk.service';
-import { Response } from 'express';
 import { TalkDto } from './data/data.request';
-import { ServerResponse } from '../types/ServerResponse';
 import { TalkResponse } from './data/data.response';
 
 @Controller('talk')

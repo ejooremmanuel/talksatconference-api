@@ -26,10 +26,13 @@ export class TalkService {
       });
       return TalkResponse.from(createdTalk);
     } catch (error) {
-      console.log(error);
-      throw new HttpException(error.message, 400, {
-        cause: error,
-      });
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 400,
+        {
+          cause: error,
+        },
+      );
     }
   }
 
@@ -38,7 +41,7 @@ export class TalkService {
     attendeeId: string,
   ): Promise<TalkResponse> {
     try {
-      if (!talkId && !attendeeId) {
+      if (!talkId || !attendeeId) {
         throw new BadRequestException('no id');
       }
 
@@ -77,9 +80,13 @@ export class TalkService {
       );
       return TalkResponse.from(updatedTalkWithNewAttendee);
     } catch (error) {
-      throw new HttpException(error.message, 400, {
-        cause: error,
-      });
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 400,
+        {
+          cause: error,
+        },
+      );
     }
   }
   async removeTalk(talkId: string): Promise<void> {
@@ -101,9 +108,13 @@ export class TalkService {
 
       await this.talkModel.findByIdAndDelete(talkId);
     } catch (error) {
-      throw new HttpException(error.message, 400, {
-        cause: error,
-      });
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 400,
+        {
+          cause: error,
+        },
+      );
     }
   }
 
@@ -125,9 +136,13 @@ export class TalkService {
 
       return TalkResponse.from(foundTalk);
     } catch (error) {
-      throw new HttpException(error.message, 400, {
-        cause: error,
-      });
+      throw new HttpException(
+        error.message,
+        error.status || error.response.statusCode || 400,
+        {
+          cause: error,
+        },
+      );
     }
   }
 }
