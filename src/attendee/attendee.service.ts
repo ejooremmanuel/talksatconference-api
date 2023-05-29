@@ -17,8 +17,8 @@ export class AttendeeService {
       return AttendeeResponse.from(createdAttendee);
     } catch (error) {
       throw new HttpException(
-        error.message,
-        error.status || error.response.statusCode || 400,
+        error?.message,
+        error?.status || error?.response?.statusCode || 400,
         {
           cause: error,
         },

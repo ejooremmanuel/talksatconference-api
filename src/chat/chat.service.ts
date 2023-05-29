@@ -20,7 +20,7 @@ export class ChatService {
     } catch (error) {
       throw new HttpException(
         error.message,
-        error.status || error.response.statusCode || 500,
+        error?.status || error?.response?.statusCode || 500,
         {
           cause: error,
         },
@@ -63,7 +63,7 @@ export class ChatService {
     } catch (error) {
       throw new HttpException(
         error.message,
-        error.status || error.response.statusCode || 400,
+        error.status || error?.response?.statusCode || 400,
         {
           cause: error,
         },
