@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AttendeeController } from './attendee.controller';
 import { AttendeeService } from './attendee.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Attendee, AttendeeSchema } from 'src/schema/attendee.schema';
+import { Attendee, AttendeeSchema } from '../schema/attendee.schema';
 
 @Module({
   imports: [

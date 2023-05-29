@@ -7,6 +7,7 @@ import { Talk, TalkSchema } from '../schema/talk.schema';
 import { Attendee, AttendeeSchema } from '../schema/attendee.schema';
 import { getModelToken } from '@nestjs/mongoose';
 import { HttpStatus } from '@nestjs/common';
+import { ServerResponse } from '../types/ServerResponse';
 
 describe('TalkController', () => {
   let controller: TalkController;
@@ -84,7 +85,8 @@ describe('TalkController', () => {
       );
 
       expect(updatedTalk.status).toBe(200);
-      expect(createdTalk.success).toBe(true);
+      expect(updatedTalk.success).toBe(true);
+      expect(updatedTalk).toMatchObject(ServerResponse);
     });
   });
 });

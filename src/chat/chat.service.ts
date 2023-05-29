@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Chat } from 'src/schema/chat.schema';
-import { Talk } from 'src/schema/talk.schema';
-import { Attendee } from 'src/schema/attendee.schema';
+import { Chat } from '../schema/chat.schema';
+import { Talk } from '../schema/talk.schema';
+import { Attendee } from '../schema/attendee.schema';
 import { ChatDto } from './data/data.request';
 
 @Injectable()

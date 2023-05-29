@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Attendee } from 'src/schema/attendee.schema';
+import { Attendee } from '../schema/attendee.schema';
 import { AttendeeDto } from './data/data.request';
 import { AttendeeResponse } from './data/data.response';
 
