@@ -38,6 +38,10 @@ export class TalkService {
     attendeeId: string,
   ): Promise<TalkResponse> {
     try {
+      if (!talkId) {
+        throw new BadRequestException('no id found');
+      }
+
       const foundTalk = await this.talkModel
         .findById(talkId)
         .populate('attendee');

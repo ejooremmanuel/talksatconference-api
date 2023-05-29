@@ -65,4 +65,26 @@ describe('TalkController', () => {
       expect(createdTalk.success).toBe(true);
     });
   });
+  describe('add attendee to a talk', () => {
+    it('should add attendee to a talk', async () => {
+      const createdTalk = await controller.createTalk({
+        attendee: '',
+        title: 'Test Talk',
+      });
+      const attendee = await attendeeModel.create({
+        email: 'joor@gmail.com',
+        name: 'joor',
+      });
+      const updatedTalk = await controller.addAttendeeToTalk(
+        createdTalk.data.id.toString(),
+        {
+          attendee: attendee._id.toString(),
+          title: 'Test Talk',
+        },
+      );
+
+      expect(updatedTalk.status).toBe(200);
+      expect(createdTalk.success).toBe(true);
+    });
+  });
 });

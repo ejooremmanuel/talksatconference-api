@@ -1,5 +1,5 @@
 export class ServerResponse<T> {
-  data: T;
+  data?: T;
   status: number;
   success: boolean;
 }

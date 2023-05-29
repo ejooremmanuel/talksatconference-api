@@ -41,36 +41,38 @@ export class TalkController {
   async addAttendeeToTalk(
     @Param('id') id: string,
     @Body() data: TalkDto,
-    @Res() res?: Response,
-  ): Promise<unknown> {
+  ): Promise<ServerResponse<TalkResponse>> {
     const updatedTalk = await this.talkService.addAttendeeToTalk(
       id,
       data.attendee,
     );
-    HttpStatus.OK;
-    return updatedTalk;
+    return {
+      data: updatedTalk,
+      status: HttpStatus.OK,
+      success: true,
+    };
   }
   @ApiTags('Get all chats for a talk')
   @Get(':id')
   async getTalkChats(
     @Param('id') id: string,
-    @Res() res: Response,
-  ): Promise<Response<any, Record<string, any>>> {
+  ): Promise<ServerResponse<TalkResponse>> {
     const data = await this.talkService.getTalkChats(id);
-    return res.status(200).json({
+    return {
       data,
       success: true,
-    });
+      status: HttpStatus.OK,
+    };
   }
   @ApiTags('Remove a talk')
   @Delete(':id')
   async removeTalk(
     @Param('id') id: string,
-    @Res() res: Response,
-  ): Promise<Response<any, Record<string, any>>> {
+  ): Promise<ServerResponse<TalkResponse>> {
     await this.talkService.removeTalk(id);
-    return res.status(200).json({
+    return {
       success: true,
-    });
+      status: HttpStatus.OK,
+    };
   }
 }
