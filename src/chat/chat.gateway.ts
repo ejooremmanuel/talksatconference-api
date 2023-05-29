@@ -46,4 +46,15 @@ export class ChatGateway implements NestGateway {
       console.log(error.response);
     }
   }
+  @Bind(MessageBody(), ConnectedSocket())
+  @SubscribeMessage('getChats')
+  async handleGetChats(chat: ChatDto, sender: any) {
+    try {
+      console.log('New event', chat);
+      sender.emit('newevent', chat);
+      sender.broadcast.emit('newEvent', chat);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
 }

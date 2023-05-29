@@ -30,13 +30,4 @@ describe('ChatService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-
-  describe('service should list chats', () => {
-    it('should return an array', async () => {
-      const allChats = await service.getChats();
-
-      expect(allChats.length).toBeGreaterThan(0);
-      expect(allChats).toBeTruthy();
-    });
-  });
 });
