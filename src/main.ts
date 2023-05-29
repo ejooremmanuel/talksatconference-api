@@ -13,7 +13,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api-docs', app, document);
-  const PORT = parseInt(process.env.PORT, 10) || 5500;
+  const PORT = process.env.PORT || 5500;
   // const client = new mongo.MongoClient(process.env);
   await app.listen(PORT, async () => {
     console.log(`server is running on ${await app.getUrl()}`);
