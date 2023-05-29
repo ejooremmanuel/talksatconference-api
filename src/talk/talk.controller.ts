@@ -22,15 +22,9 @@ export class TalkController {
 
   @ApiTags('Create new talk')
   @Post()
-  async createTalk(
-    @Body() data: TalkDto,
-  ): Promise<ServerResponse<TalkResponse>> {
-    const newTalk = await this.talkService.createTalk(data);
-    return {
-      data: newTalk,
-      status: HttpStatus.CREATED,
-      success: true,
-    };
+  async createTalk(@Body() data: TalkDto): Promise<TalkResponse> {
+    HttpStatus.CREATED;
+    return this.talkService.createTalk(data);
   }
 
   @ApiTags('Add attendee to a talk')
@@ -41,38 +35,17 @@ export class TalkController {
   async addAttendeeToTalk(
     @Param('id') id: string,
     @Body() data: TalkDto,
-  ): Promise<ServerResponse<TalkResponse>> {
-    const updatedTalk = await this.talkService.addAttendeeToTalk(
-      id,
-      data.attendee,
-    );
-    return {
-      data: updatedTalk,
-      status: HttpStatus.OK,
-      success: true,
-    };
+  ): Promise<unknown> {
+    return this.talkService.addAttendeeToTalk(id, data.attendee);
   }
   @ApiTags('Get all chats for a talk')
   @Get(':id')
-  async getTalkChats(
-    @Param('id') id: string,
-  ): Promise<ServerResponse<TalkResponse>> {
-    const data = await this.talkService.getTalkChats(id);
-    return {
-      data,
-      success: true,
-      status: HttpStatus.OK,
-    };
+  async getTalkChats(@Param('id') id: string): Promise<TalkResponse> {
+    return this.talkService.getTalkChats(id);
   }
   @ApiTags('Remove a talk')
   @Delete(':id')
-  async removeTalk(
-    @Param('id') id: string,
-  ): Promise<ServerResponse<TalkResponse>> {
+  async removeTalk(@Param('id') id: string): Promise<void> {
     await this.talkService.removeTalk(id);
-    return {
-      success: true,
-      status: HttpStatus.OK,
-    };
   }
 }

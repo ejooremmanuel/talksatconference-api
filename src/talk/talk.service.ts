@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Error, Model } from 'mongoose';
 import { Attendee } from '../schema/attendee.schema';
 import { Talk } from '../schema/talk.schema';
 import { TalkDto } from './data/data.request';
@@ -27,7 +27,7 @@ export class TalkService {
       return TalkResponse.from(createdTalk);
     } catch (error) {
       console.log(error);
-      throw new HttpException('server error', 500, {
+      throw new HttpException(error.message, 400, {
         cause: error,
       });
     }
@@ -38,8 +38,8 @@ export class TalkService {
     attendeeId: string,
   ): Promise<TalkResponse> {
     try {
-      if (!talkId) {
-        throw new BadRequestException('no id found');
+      if (!talkId && !attendeeId) {
+        throw new BadRequestException('no id');
       }
 
       const foundTalk = await this.talkModel
@@ -77,7 +77,7 @@ export class TalkService {
       );
       return TalkResponse.from(updatedTalkWithNewAttendee);
     } catch (error) {
-      throw new HttpException('server error', 500, {
+      throw new HttpException(error.message, 500, {
         cause: error,
       });
     }
@@ -101,7 +101,7 @@ export class TalkService {
 
       await this.talkModel.findByIdAndDelete(talkId);
     } catch (error) {
-      throw new HttpException(`server error:${error.message}`, 500, {
+      throw new HttpException(error.message, 400, {
         cause: error,
       });
     }
@@ -125,7 +125,7 @@ export class TalkService {
 
       return TalkResponse.from(foundTalk);
     } catch (error) {
-      throw new HttpException('server error', 500, {
+      throw new HttpException(error.message, 400, {
         cause: error,
       });
     }

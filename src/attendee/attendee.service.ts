@@ -16,7 +16,7 @@ export class AttendeeService {
       const createdAttendee = await this.attendeeModel.create(data);
       return AttendeeResponse.from(createdAttendee);
     } catch (error) {
-      throw new HttpException('server error', 500, {
+      throw new HttpException(error.message, 400, {
         cause: error,
       });
     }

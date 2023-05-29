@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TalkController } from './talk.controller';
 import { TalkService } from './talk.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Attendee, AttendeeSchema } from 'src/schema/attendee.schema';
-import { Talk, TalkSchema } from 'src/schema/talk.schema';
+import { Attendee, AttendeeSchema } from '../schema/attendee.schema';
+import { Talk, TalkSchema } from '../schema/talk.schema';
 
 @Module({
   imports: [

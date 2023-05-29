@@ -52,7 +52,7 @@ export class ChatService {
       });
     } catch (error) {
       console.log(error);
-      throw new HttpException(`server error:${error.message}`, 500, {
+      throw new HttpException(`${error.message}`, 400, {
         cause: error,
       });
     }
