@@ -6,7 +6,7 @@ import { Connection, Model, connect } from 'mongoose';
 import { Talk, TalkSchema } from '../schema/talk.schema';
 import { Attendee, AttendeeSchema } from '../schema/attendee.schema';
 import { getModelToken } from '@nestjs/mongoose';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 
 describe('TalkController', () => {
   let controller: TalkController;
@@ -61,7 +61,6 @@ describe('TalkController', () => {
       });
 
       expect(createdTalk['title']).toBe('Test Talk');
-      expect(createdTalk).toBe(HttpStatus.CREATED);
       expect(createdTalk).toBeTruthy();
     });
   });
@@ -83,27 +82,8 @@ describe('TalkController', () => {
         },
       );
 
-      // expect(updatedTalk.attendees.length).toBe(1);
-      // expect(updatedTalk.success).toBe(true);
-    });
-    it('should throw an error', async () => {
-      const createdTalk = await controller.createTalk({
-        attendee: '',
-        title: 'Test Talk',
-      });
-      const attendee = await attendeeModel.create({
-        email: 'joor@gmail.com',
-        name: 'joor',
-      });
-      const updatedTalk = await controller.addAttendeeToTalk('', {
-        attendee: '',
-        title: 'Test Talk',
-      });
-
-      console.log(JSON.stringify(updatedTalk));
-
-      // expect(JSON.stringify(updatedTalk)).toBe('HttpException: no id');
-      // expect(JSON.stringify(updatedTalk)).toBe('HttpException: no id');
+      expect(updatedTalk.attendees.length).toBe(1);
+      expect(updatedTalk).toBeTruthy();
     });
   });
 });

@@ -35,7 +35,7 @@ export class TalkController {
   async addAttendeeToTalk(
     @Param('id') id: string,
     @Body() data: TalkDto,
-  ): Promise<unknown> {
+  ): Promise<TalkResponse> {
     return this.talkService.addAttendeeToTalk(id, data.attendee);
   }
   @ApiTags('Get all chats for a talk')
