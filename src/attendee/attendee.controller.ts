@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AttendeeService } from './attendee.service';
 import { AttendeeDto } from './data/data.request';
@@ -12,7 +12,16 @@ export class AttendeeController {
     status: HttpStatus.CREATED,
   })
   @ApiTags('Add attendee')
-  async createAttendees(@Body() data: AttendeeDto): Promise<AttendeeResponse> {
+  async createAttendee(@Body() data: AttendeeDto): Promise<AttendeeResponse> {
     return this.attendeeService.createAttendee(data);
+  }
+
+  @Get()
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @ApiTags('Get Attendees')
+  async getAttendees(): Promise<AttendeeResponse[]> {
+    return this.attendeeService.getAttendees();
   }
 }

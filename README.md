@@ -19,12 +19,19 @@ https://conference-api.onrender.com
 **Event to emit**
 "chat"
 
+Steps for real time chat
+
+1. Emit `chat` to create a new chat with the message body formatted as above
+2. Listen for a server response event of `newChat` to fetch chats
+
 **Client used to test websocket**
 Socket.IO Test Client (v0.4.3)
 chrome-extension://ophmdkgfcjapomjdpfobjfbihojchbko/index.html
 
 **API Documentation can be found here**
-https://conference-api.onrender.com/api-docs
+
+[https://conference-api.onrender.com/api-docs](https://conference-api.onrender.com/api-docs)
 
 **GitHub Repo**
-https://github.com/ejooremmanuel/talksatconference-api
+
+[https://github.com/ejooremmanuel/talksatconference-api](https://github.com/ejooremmanuel/talksatconference-api)

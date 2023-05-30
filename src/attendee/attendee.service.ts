@@ -25,4 +25,27 @@ export class AttendeeService {
       );
     }
   }
+
+  async getAttendees(): Promise<AttendeeResponse[]> {
+    try {
+      const foundAttendees = await this.attendeeModel.find();
+
+      const data: AttendeeResponse[] = [];
+
+      for (let item of foundAttendees) {
+        const res = AttendeeResponse.from(item);
+        data.push(res);
+      }
+
+      return data;
+    } catch (error) {
+      throw new HttpException(
+        error?.message,
+        error?.status || error?.response?.statusCode || 500,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
 }

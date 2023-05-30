@@ -145,4 +145,34 @@ export class TalkService {
       );
     }
   }
+  async getTalks(): Promise<TalkResponse[]> {
+    try {
+      const foundTalk = await this.talkModel
+        .find()
+        .populate({
+          path: 'chat',
+          populate: {
+            path: 'sender',
+          },
+        })
+        .populate('attendee');
+
+      const data: TalkResponse[] = [];
+
+      for (let item of foundTalk) {
+        const res = TalkResponse.from(item);
+        data.push(res);
+      }
+
+      return data;
+    } catch (error) {
+      throw new HttpException(
+        error?.message,
+        error?.status || error?.response?.statusCode || 500,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
 }

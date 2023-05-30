@@ -35,11 +35,19 @@ export class TalkController {
   ): Promise<TalkResponse> {
     return this.talkService.addAttendeeToTalk(id, data.attendee);
   }
+
   @ApiTags('Get all chats for a talk')
   @Get(':id')
   async getTalkChats(@Param('id') id: string): Promise<TalkResponse> {
     return this.talkService.getTalkChats(id);
   }
+
+  @ApiTags('Get all talks')
+  @Get()
+  async getTalks(): Promise<TalkResponse[]> {
+    return this.talkService.getTalks();
+  }
+
   @ApiTags('Remove a talk')
   @Delete(':id')
   async removeTalk(@Param('id') id: string): Promise<void> {
