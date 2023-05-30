@@ -9,5 +9,5 @@ export declare class ChatService {
     private readonly attendeeModel;
     constructor(chatModel: Model<Chat>, talkModel: Model<Talk>, attendeeModel: Model<Attendee>);
     getChats(): Promise<Chat[]>;
-    saveChat(chat: ChatDto): Promise<void>;
+    saveChat(chat: ChatDto): Promise<Chat[]>;
 }

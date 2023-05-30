@@ -47,7 +47,7 @@ let ChatService = class ChatService {
             }
             const findAttendeeDetails = await this.attendeeModel.findById(chat.sender);
             if (!findAttendeeDetails) {
-                throw new common_1.HttpException('attendee not found', 400);
+                throw new common_1.BadRequestException('attendee not found');
             }
             const checkIfAttendeeInTalk = findTalk.attendee.find((it) => it.email === findAttendeeDetails.email);
             if (!checkIfAttendeeInTalk) {
@@ -55,11 +55,21 @@ let ChatService = class ChatService {
             }
             const createdChat = new this.chatModel(chat);
             await createdChat.save();
-            await this.talkModel.findByIdAndUpdate(chat.talk, {
+            const updated = await this.talkModel
+                .findByIdAndUpdate(chat.talk, {
                 $push: {
                     chat: createdChat,
                 },
+                new: true,
+            })
+                .populate({
+                path: 'chat',
+                populate: {
+                    path: 'sender',
+                },
             });
+            const findChats = updated.chat;
+            return findChats;
         }
         catch (error) {
             throw new common_1.HttpException(error.message, error.status || ((_a = error === null || error === void 0 ? void 0 : error.response) === null || _a === void 0 ? void 0 : _a.statusCode) || 400, {
