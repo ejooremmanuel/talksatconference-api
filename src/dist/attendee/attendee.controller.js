@@ -21,8 +21,11 @@ let AttendeeController = class AttendeeController {
     constructor(attendeeService) {
         this.attendeeService = attendeeService;
     }
-    async createAttendees(data) {
+    async createAttendee(data) {
         return this.attendeeService.createAttendee(data);
+    }
+    async getAttendees() {
+        return this.attendeeService.getAttendees();
     }
 };
 __decorate([
@@ -35,7 +38,17 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [data_request_1.AttendeeDto]),
     __metadata("design:returntype", Promise)
-], AttendeeController.prototype, "createAttendees", null);
+], AttendeeController.prototype, "createAttendee", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, swagger_1.ApiResponse)({
+        status: common_1.HttpStatus.OK,
+    }),
+    (0, swagger_1.ApiTags)('Get Attendees'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AttendeeController.prototype, "getAttendees", null);
 AttendeeController = __decorate([
     (0, common_1.Controller)('attendee'),
     __metadata("design:paramtypes", [attendee_service_1.AttendeeService])
