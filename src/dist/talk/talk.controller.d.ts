@@ -7,5 +7,6 @@ export declare class TalkController {
     createTalk(data: TalkDto): Promise<TalkResponse>;
     addAttendeeToTalk(id: string, data: TalkDto): Promise<TalkResponse>;
     getTalkChats(id: string): Promise<TalkResponse>;
+    getTalks(): Promise<TalkResponse[]>;
     removeTalk(id: string): Promise<void>;
 }

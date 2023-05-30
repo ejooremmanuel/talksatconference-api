@@ -5,6 +5,7 @@ import { Chat } from '../schema/chat.schema';
 import { Talk } from '../schema/talk.schema';
 import { Attendee } from '../schema/attendee.schema';
 import { ChatDto } from './data/data.request';
+import { ChatResponse } from './data/data.response';
 
 @Injectable()
 export class ChatService {
@@ -28,7 +29,7 @@ export class ChatService {
     }
   }
 
-  async saveChat(chat: ChatDto): Promise<void> {
+  async saveChat(chat: ChatDto): Promise<Chat[]> {
     try {
       const findTalk = await this.talkModel
         .findById(chat.talk)
@@ -42,7 +43,7 @@ export class ChatService {
         chat.sender,
       );
       if (!findAttendeeDetails) {
-        throw new HttpException('attendee not found', 400);
+        throw new BadRequestException('attendee not found');
       }
 
       const checkIfAttendeeInTalk = findTalk.attendee.find(
@@ -55,11 +56,21 @@ export class ChatService {
 
       const createdChat = new this.chatModel(chat);
       await createdChat.save();
-      await this.talkModel.findByIdAndUpdate(chat.talk, {
-        $push: {
-          chat: createdChat,
-        },
-      });
+      const updated = await this.talkModel
+        .findByIdAndUpdate(chat.talk, {
+          $push: {
+            chat: createdChat,
+          },
+          new: true,
+        })
+        .populate({
+          path: 'chat',
+          populate: {
+            path: 'sender',
+          },
+        });
+      const findChats = updated.chat;
+      return findChats;
     } catch (error) {
       throw new HttpException(
         error.message,

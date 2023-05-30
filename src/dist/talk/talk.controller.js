@@ -31,6 +31,9 @@ let TalkController = class TalkController {
     async getTalkChats(id) {
         return this.talkService.getTalkChats(id);
     }
+    async getTalks() {
+        return this.talkService.getTalks();
+    }
     async removeTalk(id) {
         await this.talkService.removeTalk(id);
     }
@@ -63,6 +66,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], TalkController.prototype, "getTalkChats", null);
+__decorate([
+    (0, swagger_1.ApiTags)('Get all talks'),
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], TalkController.prototype, "getTalks", null);
 __decorate([
     (0, swagger_1.ApiTags)('Remove a talk'),
     (0, common_1.Delete)(':id'),

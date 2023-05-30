@@ -34,6 +34,23 @@ let AttendeeService = class AttendeeService {
             });
         }
     }
+    async getAttendees() {
+        var _a;
+        try {
+            const foundAttendees = await this.attendeeModel.find();
+            const data = [];
+            for (let item of foundAttendees) {
+                const res = data_response_1.AttendeeResponse.from(item);
+                data.push(res);
+            }
+            return data;
+        }
+        catch (error) {
+            throw new common_1.HttpException(error === null || error === void 0 ? void 0 : error.message, (error === null || error === void 0 ? void 0 : error.status) || ((_a = error === null || error === void 0 ? void 0 : error.response) === null || _a === void 0 ? void 0 : _a.statusCode) || 500, {
+                cause: error,
+            });
+        }
+    }
 };
 AttendeeService = __decorate([
     (0, common_1.Injectable)(),

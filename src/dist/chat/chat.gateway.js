@@ -32,10 +32,9 @@ let ChatGateway = class ChatGateway {
     }
     async handleNewMessage(chat, sender) {
         try {
-            console.log('New Chat', chat);
-            await this.chatService.saveChat(chat);
-            sender.emit('newChat', chat);
-            sender.broadcast.emit('newChat', chat);
+            const res = await this.chatService.saveChat(chat);
+            sender.emit('newChat', [...res]);
+            sender.broadcast.emit('newChat', res);
         }
         catch (error) {
             console.log(error.response);

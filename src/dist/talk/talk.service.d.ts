@@ -11,4 +11,5 @@ export declare class TalkService {
     addAttendeeToTalk(talkId: string, attendeeId: string): Promise<TalkResponse>;
     removeTalk(talkId: string): Promise<void>;
     getTalkChats(talkId: string): Promise<TalkResponse>;
+    getTalks(): Promise<TalkResponse[]>;
 }

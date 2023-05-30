@@ -6,4 +6,5 @@ export declare class AttendeeService {
     private attendeeModel;
     constructor(attendeeModel: Model<Attendee>);
     createAttendee(data: AttendeeDto): Promise<AttendeeResponse>;
+    getAttendees(): Promise<AttendeeResponse[]>;
 }
