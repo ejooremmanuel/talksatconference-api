@@ -56,7 +56,7 @@ export class ChatService {
 
       const createdChat = new this.chatModel(chat);
       await createdChat.save();
-      const updated = await this.talkModel
+      const updatedTalkWithChat = await this.talkModel
         .findByIdAndUpdate(chat.talk, {
           $push: {
             chat: createdChat,
@@ -69,8 +69,8 @@ export class ChatService {
             path: 'sender',
           },
         });
-      const findChats = updated.chat;
-      return findChats;
+
+      return updatedTalkWithChat.chat;
     } catch (error) {
       throw new HttpException(
         error.message,
